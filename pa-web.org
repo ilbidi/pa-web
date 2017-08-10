@@ -1,0 +1,6 @@
+* PA-WEB
+Gestione sito web project arrakis
+
+Le idee di strutturazione sito vengono da 
+http://exploreflask.com
+
