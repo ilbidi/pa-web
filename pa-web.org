@@ -32,3 +32,6 @@ Application structure sketch
 
 
 * NOTES
+
+* TASKS
+** TODO - Remove file .#pa-web.org@ from git
