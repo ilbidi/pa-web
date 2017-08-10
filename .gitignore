@@ -39,6 +39,7 @@ Thumbs.db
 # Custom Files and directories #
 ################################
 venv/
+instance/
 *~
 *#
 *.db

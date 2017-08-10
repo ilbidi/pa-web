@@ -4,3 +4,31 @@ Gestione sito web project arrakis
 Le idee di strutturazione sito vengono da 
 http://exploreflask.com
 
+* TRACKING
+** 2017-08-10
+inserted a customized .gitignore file, it's important excluding virtual enviroment
+and folder instance that will contain secret config variables
+
+created a virtual enviroment
+
+freezed python packages with command: pip freeze > requirements.txt
+
+Application structure sketch
+
+.
+├── config.py
+├── instance
+│   └── config.py
+├── pa_web
+│   ├── forms.py
+│   ├── __init__.py
+│   ├── models.py
+│   ├── static
+│   ├── templates
+│   └── views.py
+├── requirements.txt
+└── run.py
+
+
+
+* NOTES
