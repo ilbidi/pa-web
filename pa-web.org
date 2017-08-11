@@ -36,7 +36,13 @@ Application structure sketch
 Managing config.py, we will use 2 config.py, the first in app root directory,
 the other in instance/
 
+Add sqlalchemy t project and requirements
+
 * NOTES
+
 
 * TASKS
 ** TODO - Remove file .#pa-web.org@ from git
+
+* PACKAGES REQUIRED
+sqlalchemy
