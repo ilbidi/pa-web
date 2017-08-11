@@ -7,7 +7,8 @@ http://exploreflask.com
 * TRACKING
 ** 2017-08-10
 inserted a customized .gitignore file, it's important excluding virtual enviroment
-and folder instance that will contain secret config variables
+and folder instance that will contain secret config variables.
+IMPORTANT - the instance forlder and the config.py in it must be created manually
 
 created a virtual enviroment
 
@@ -30,6 +31,10 @@ Application structure sketch
 └── run.py
 
 
+
+** 2017-08-11
+Managing config.py, we will use 2 config.py, the first in app root directory,
+the other in instance/
 
 * NOTES
 
