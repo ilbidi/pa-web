@@ -30,5 +30,4 @@ Application structure sketch
 └── run.py
 
 
-
 * NOTES
