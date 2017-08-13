@@ -42,7 +42,8 @@ Add sqlalchemy t project and requirements
 
 
 ** 2017-08-13
-Inserted a basic view , modified __init__.py, run.py and views.py
+Inserted a basic view , modified __init__.py, run.py and views.py.
+
 
 * NOTES
 
@@ -51,4 +52,5 @@ Inserted a basic view , modified __init__.py, run.py and views.py
 ** TODO - Remove file .#pa-web.org@ from git
 
 * PACKAGES REQUIRED
+flask
 sqlalchemy
