@@ -3,6 +3,8 @@ Gestione sito web project arrakis
 
 Le idee di strutturazione sito vengono da 
 http://exploreflask.com
+e da
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 
 * TRACKING
 ** 2017-08-10
@@ -37,6 +39,10 @@ Managing config.py, we will use 2 config.py, the first in app root directory,
 the other in instance/
 
 Add sqlalchemy t project and requirements
+
+
+** 2017-08-13
+Inserted a basic view , modified __init__.py, run.py and views.py
 
 * NOTES
 
