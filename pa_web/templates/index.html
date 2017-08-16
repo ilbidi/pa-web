@@ -1,1 +1,7 @@
-<h1>Index page</h1>
+{% extends "layout.html" %}
+{% block title %}Hi all{% endblock %}
+
+{% block body %}
+{{ super() }}
+<h2>This heading is defined in the child.</h2>
+{% endblock %}
