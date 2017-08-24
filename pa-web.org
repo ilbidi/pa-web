@@ -45,6 +45,12 @@ Add sqlalchemy t project and requirements
 Inserted a basic view , modified __init__.py, run.py and views.py.
 
 
+** 2017-08-24 
+Created base.html with bootstrap as a layout for the application
+Start managing localisation and I18N, 
+for dates and times we will use the package flask-moment, the server (my RPI) is configured in UTC
+
+
 * NOTES
 
 
