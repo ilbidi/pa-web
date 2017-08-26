@@ -1,5 +1,5 @@
 # imports
-from flask import request, render_template, render_template, url_for, redirect
+from flask import request, render_template, render_template, url_for, redirect, flash
 
 # views
 from pa_web import app
@@ -48,5 +48,6 @@ def internal_server_error(e):
 def contacts():
     form = ContactsForm()
     if( form.validate_on_submit() ):
+        flash('Thanks for your request %s, we will contact you.'%form.email.data)
         return redirect(url_for('contacts'))
     return render_template('contacts.html', form=form)
