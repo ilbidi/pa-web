@@ -51,6 +51,14 @@ Start managing localisation and I18N,
 for dates and times we will use the package flask-moment, the server (my RPI) is configured in UTC
 
 
+** 2017-08-25
+Added a contact form
+Starting with email management
+
+The problem with email management is that they are not a backgroud task, they can be converted to a backgroud task 
+but still, with a lot uf users, the program will have a lot of threads.
+The solution semms to be the use of CELERY , a task queue.
+
 * NOTES
 
 
