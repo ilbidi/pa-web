@@ -5,6 +5,9 @@ from flask import request, render_template, render_template, url_for, redirect, 
 from pa_web import app
 from pa_web.forms import EmailPasswordForm, ContactsForm
 
+# Emails
+from .emails import send_email
+
 # Index
 @app.route('/')
 @app.route('/index')
@@ -49,5 +52,11 @@ def contacts():
     form = ContactsForm()
     if( form.validate_on_submit() ):
         flash('Thanks for your request %s, we will contact you.'%form.email.data)
+        send_email(app.config['PAWEB_SUBJECT_PREFIX'] + '- Contact request.',
+                   app.config['PAWEB_MAIL_SENDER'],
+                   form.email.data,
+                   form.request.data,
+                   form.request.data) 
+            
         return redirect(url_for('contacts'))
     return render_template('contacts.html', form=form)
