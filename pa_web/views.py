@@ -1,9 +1,9 @@
 # imports
-from flask import request, render_template, render_template, url_for
+from flask import request, render_template, render_template, url_for, redirect
 
 # views
 from pa_web import app
-from pa_web.forms import EmailPasswordForm
+from pa_web.forms import EmailPasswordForm, ContactsForm
 
 # Index
 @app.route('/')
@@ -42,3 +42,11 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+# Contacts
+@app.route('/contacts', methods=['GET', 'POST'])
+def contacts():
+    form = ContactsForm()
+    if( form.validate_on_submit() ):
+        return redirect(url_for('contacts'))
+    return render_template('contacts.html', form=form)
