@@ -60,3 +60,8 @@ def contacts():
             
         return redirect(url_for('contacts'))
     return render_template('contacts.html', form=form)
+
+# Meteo in arrakis
+@app.route('/meteo')
+def meteo():
+    return render_template('meteo.html')
