@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Project Arrrakis{% endblock %}
+
+{% block navbar %}
+{{ super() }}
+
+{% endblock %}
+
+{% block content %}
+<h1>Current weather in Arrakis is:</h1>
+<div style="pointer-events: none" id="cont_ae98a74267db405b06a9388a54ca0778">
+  <script type="text/javascript" async src="https://www.ilmeteo.net/wid_loader/ae98a74267db405b06a9388a54ca0778"></script>
+</div>
+{% endblock %}
