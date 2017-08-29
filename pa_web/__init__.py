@@ -3,20 +3,35 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
-
-# Load configurations
-app = Flask(__name__, instance_relative_config=True)
-app.config.from_object('config')
-app.config.from_pyfile('config.py')
+from flask_moment import Moment
+from config import config
 
 # Database
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 # Init bootstrap
-bootstrap = Bootstrap(app)
+bootstrap = Bootstrap()
 
 # Init email
-mail = Mail(app)
+mail = Mail()
 
-# AT THE END - Import views, the import is at the end to avoid circular import
-from pa_web import views
+# Init Moment
+moment = Moment()
+
+# App creation
+def create_app(config_name):
+    """Creation of the app"""
+    app = Flask(__name__)
+    app.config.from_object(config[config_name ])
+    config[config_name].init_app(app)
+
+    bootstrap.init_app(app)
+    mail.init_app(app)
+    moment.init_app(app)
+    db.init_app(app)
+
+    # Blueprints
+    from main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+
+    return app
