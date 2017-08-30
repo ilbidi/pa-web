@@ -44,3 +44,4 @@ instance/
 *#
 *.db
 *.pyc
+config.py
