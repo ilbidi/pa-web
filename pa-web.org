@@ -59,6 +59,7 @@ The problem with email management is that they are not a backgroud task, they ca
 but still, with a lot uf users, the program will have a lot of threads.
 The solution semms to be the use of CELERY , a task queue.
 
+
 ** 2017-08-29
 Restructuring app using blueprints
 The app will have 2 areas
@@ -67,13 +68,52 @@ The app will have 2 areas
   
 We start with the rearrangement of config to handle different config options
 
+** 2017-08-30
+Adding tests
+
+Start building autenticatio package
+Creating a user model and a role model
+they are basic tables with only 2 fields, an id and a code.
+A relation is created between User and Role
+
+
+* Tables
+** Role
+| Field | Type       | Notes     |
+|-------+------------+-----------|
+| id    | Integer    | the id    |
+| name  | String(64) | role name |
+|       |            |           |
+
+Relation 1 to many with User
+
+** User
+| Field    | Type      | Notes   |
+|----------+-----------+---------|
+| id       | Integer   | user id |
+| username | Strin(64) | user name |
+relation many to 1 with Role
 
 * NOTES
+** General
 To list a tree directory structure use
 tree -I 'venv|*~|*#|*.pyc'
 
+** Database
+Various notes on initialization and migration of db
+*** Creation of migration directory and scripts
+python manage.py db init
+this command create a irectory migrations with all the necessary scripts to manage 
+the db
+
+*** Initial migration 
+python manage.py db migrate -m "Initial migration"
+
+*** Updating a db
+python manage.py db upgrade
+
 * TASKS
-** TODO - Remove file .#pa-web.org@ from git
+** DONE - Remove file .#pa-web.org@ from git
 
 * PACKAGES REQUIRED
 flask
