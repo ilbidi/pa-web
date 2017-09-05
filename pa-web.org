@@ -81,6 +81,7 @@ A relation is created between User and Role
 ** 2017-08-31
 Hasking of password in user model
 
+
 * Tables
 ** Role
 | Field | Type       | Notes     |
@@ -118,6 +119,15 @@ python manage.py db upgrade
 
 * TASKS
 ** DONE - Remove file .#pa-web.org@ from git
+
+** TODO - Check in detail what this code in tests do
+def test_no_password_getter(self):
+    user = User( username = 'test', password='test1')
+    with self.assertRaises(AttributeError):
+        user.password
+** TODO : Check in detail what it means
+return redirect(request.args.get('next') or url_for('main.index'))
+
 
 * PACKAGES REQUIRED
 flask

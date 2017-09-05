@@ -24,8 +24,8 @@ def contacts():
                    current_app.config['PAWEB_MAIL_SENDER'],
                    form.email.data,
                    form.request.data,
-                   form.request.data) 
-            
+                   form.request.data)
+
         return redirect(url_for('.contacts'))
     return render_template('contacts.html', form=form)
 
