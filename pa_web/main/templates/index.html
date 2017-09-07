@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block content %}
-<h1>What is the weather in Arrakis?</h1>
-
+{{ super() }}
+{% if current_user.is_authenticated %}
+<h1>Welcome {{ current_user.username }}</h1>
+<a href = '/meteo'><h2>Click here to find out what is the weather in Arrakis?</h2></a>
+{% else %}
+<h1>Login to find out what is the weather in Arrakis.</h1>
+{% endif%}
 {% endblock %}

@@ -4,6 +4,7 @@ from flask import request, render_template, render_template, url_for, redirect, 
 from . import main
 from .forms import ContactsForm
 from .. import db
+from flask_login import login_required
 
 # Emails
 from pa_web.emails import send_email
@@ -31,5 +32,6 @@ def contacts():
 
 # Meteo in arrakis
 @main.route('/meteo')
+@login_required
 def meteo():
     return render_template('meteo.html')

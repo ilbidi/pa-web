@@ -5,7 +5,7 @@ from . import auth
 from .. import db
 from .forms import LoginForm
 from ..models import User
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 # Emails
 from pa_web.emails import send_email
@@ -21,3 +21,11 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Login error')
     return render_template('login.html', form = form)
+
+# Logout
+@auth.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    flash('Logged out')
+    return redirect(url_for('main.index'))
