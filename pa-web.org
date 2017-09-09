@@ -82,6 +82,9 @@ A relation is created between User and Role
 Hasking of password in user model
 
 
+** 2017-09-09
+User registration
+
 * Tables
 ** Role
 | Field | Type       | Notes     |

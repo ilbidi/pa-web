@@ -1,0 +1,9 @@
+Dear {{user.username}},
+
+To complete registration process please click the link below
+
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+The Arrakis team thanks you.
+
+Note: Please do not reply to this email.
