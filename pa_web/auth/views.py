@@ -5,8 +5,8 @@ from . import auth
 from .. import db
 from .forms import LoginForm, UserRegistrationForm
 from ..models import User
-from ..emails import send_email
-from flask_login import login_user, logout_user, login_required
+from ..emails import send_email, send_email_template
+from flask_login import login_user, logout_user, login_required, current_user
 
 # Emails
 from pa_web.emails import send_email
@@ -43,9 +43,10 @@ def register():
         token = user.generate_confirmation_token()
         send_email_template(form.email.data, \
                             'Confirm your account', \
-                            'emails/register', \
+                            'emails/register_confirm', \
                             user=user, token=token \
                             )
+        flash('An email was sent to %s, please confirm your registration.' % form.email.data)
         return redirect(url_for('auth.login'))
     return render_template('register.html', form = form)
 

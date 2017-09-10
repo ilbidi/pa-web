@@ -31,13 +31,13 @@ class UserRegistrationForm(Form):
                                                       ])
     submit = SubmitField('Register')
 
-# Validators
-# If a form define a mathod wich name begins with validate_ this method is automatically invoked
-# at the field indated in method name
-def validate_email(self, field):
-    if(User.query.filter_by(email=field.data).first() ):
-        raise ValidationError('Email already registered.')
+    # Validators
+    # If a form define a mathod wich name begins with validate_ this method is automatically invoked
+    # at the field indated in method name
+    def validate_email(self, field):
+        if(User.query.filter_by(email=field.data).first() ):
+            raise ValidationError('Email already registered.')
 
-def validate_username(self, field):
-    if( User.query.filter_by(username=field.data).first() ):
-        raise ValidationError('Username already exist, please chose a different one.')
+    def validate_username(self, field):
+        if( User.query.filter_by(username=field.data).first() ):
+            raise ValidationError('Username already exist, please chose a different one.')
