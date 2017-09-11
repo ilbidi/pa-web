@@ -36,10 +36,6 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # Token generation and management
-    def generate_confirmation_token(self, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        return s.dumps({'confirm': self.id})
     def confirm(self, token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:

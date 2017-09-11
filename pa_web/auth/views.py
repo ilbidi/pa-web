@@ -11,6 +11,14 @@ from flask_login import login_user, logout_user, login_required, current_user
 # Emails
 from pa_web.emails import send_email
 
+# checking unconfirmed users
+@auth.before_app_request
+def before_request():
+    if( current_user.is_authenticated \
+        and not current_user.confirmed \
+        and request.endpoint[:5] != 'auth.' ):
+        return redirect(url_for('auth.unconfirmed'))
+
 # Login
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -47,7 +55,7 @@ def register():
                             user=user, token=token \
                             )
         flash('An email was sent to %s, please confirm your registration.' % form.email.data)
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('main.index'))
     return render_template('register.html', form = form)
 
 # confirm
@@ -60,4 +68,25 @@ def confirm(token):
         flash('Your account is confirmed.')
     else:
         flash('The link you provide was invalid or has expired, register again please.')
+    return redirect(url_for('main.index'))
+
+# Unconfirmed user
+@auth.route('/unconfirmed')
+def unconfirmed():
+    if( current_user.is_anonymous or \
+        current_user.confirmed ):
+        return redirect(url_for('main.index'))
+    return render_template('unconfirmed.html')
+
+# Resend confirmation email
+@auth.route('/confirm')
+@login_required
+def resend_confirmation():
+    token = current_user.generate_confirmation_token()
+    send_email_template(form.email.data, \
+                        'Confirm your account', \
+                        'emails/register_confirm', \
+                        user=user, token=token \
+    )
+    flash('An email was sent to %s, please confirm your registration.' % current_user.email)
     return redirect(url_for('main.index'))
