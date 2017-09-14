@@ -85,15 +85,35 @@ Hasking of password in user model
 ** 2017-09-09
 User registration
 
+** 2017-09-14
+Roles definiton
+
 * Tables
 ** Role
-| Field | Type       | Notes     |
-|-------+------------+-----------|
-| id    | Integer    | the id    |
-| name  | String(64) | role name |
-|       |            |           |
+| Field       | Type       | Notes          |
+|-------------+------------+----------------|
+| id          | Integer    | the id         |
+| name        | String(64) | role name      |
+| default     | Boolean    |                |
+| permissions | Integer    |                |
+|             |            |                |
+| users       | User       | List of users  |
+|             |            | with this role |
+|             |            |                |
 
 Relation 1 to many with User
+
+the permission filed is an integer used as bit flags
+Each permision is represented like this
+| Task                      | Bit value  | Description            |
+|---------------------------+------------+------------------------|
+| Administrator             | 0b10000000 | Administrative access  |
+| Super user                | 0b00001000 | Can modify users posts |
+| Follow other users posts  | 0b00000001 |                        |
+| Comment other users posts | 0b00000010 |                        |
+| Write posts               | 0b00000100 |                        |
+|                           |            |                        |
+
 
 ** User
 | Field    | Type      | Notes   |
