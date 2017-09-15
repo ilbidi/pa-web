@@ -1,7 +1,7 @@
 # Models
 from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 
@@ -9,7 +9,7 @@ class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(64), unique=True)
-    deafult = db.Column(db.Boolean, default=False, index=True)
+    default = db.Column(db.Boolean, default=False, index=True)
     permission = db.Column(db.Integer,)
     
     users = db.relationship('User', backref='role', lazy='dynamic')
@@ -20,20 +20,20 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User' : (Permission.FOLLOW |
-                      Permission.COMMENT |
-                      Permission.WRITE_POST |
+            'User' : (Permission.FOLLOW | 
+                      Permission.COMMENT | 
+                      Permission.WRITE_POST  
                       , True), 
             'SuperUser' : (Permission.FOLLOW |
                            Permission.COMMENT |
-                           Permission.WRITE_POST |
-                           , False),
-            'Administrator' : ( 0xff, False)
+                           Permission.WRITE_POST  
+                           , False), 
+            'Administrator' : ( 0xff, False) 
         }
-        for( r in roles ):
+        for r in roles :
             role = Role.query.filter_by(name=r).first()
             if( role is None ):
-                role = Role.(name=r)
+                role = Role(name=r)
             role.permission = roles[r][0]
             role.default = roles[r][1]
             db.session.add(role)
@@ -62,10 +62,10 @@ class User(UserMixin, db.Model):
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if( self.role is None):
-            if( self.email == current_app,config('PAWEB_ADMIN') ):
+            if( self.email == current_app.config['PAWEB_ADMIN'] ):
                 self.role = Role.query.filter_by(permission=0xff).first()
             else:
-                slef.role = Role.query.filter_by(default=True).first()
+                self.role = Role.query.filter_by(default=True).first()
         
     @property
     def password(self):
@@ -93,6 +93,19 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+    # User helpers
+    def can(self, permission):
+        return self.role is not None and \
+            (self.role.permission & permission ) == permission
+    def is_administrator(self):
+        return self.can(Permission.ADMINISTRATOR)
+
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permission):
+        return False
+    def is_administrator(self):
+        return False
+login_manager.anonymous_user = AnonymousUser
 
 # Login helper functions
 @login_manager.user_loader
