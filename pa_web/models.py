@@ -1,4 +1,5 @@
 # Models
+from datetime import datetime
 from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
@@ -55,7 +56,13 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
-
+    #
+    name = db.Column(db.String(128))
+    location = db.Column(db.String(128))
+    about_me = db.Column(db.Text())
+    member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
+    
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
     # Constructor
@@ -99,6 +106,11 @@ class User(UserMixin, db.Model):
             (self.role.permission & permission ) == permission
     def is_administrator(self):
         return self.can(Permission.ADMINISTRATOR)
+    def ping(self):
+        """Set the last_seen timestamp"""
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
+        
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permission):

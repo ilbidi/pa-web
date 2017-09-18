@@ -88,6 +88,9 @@ User registration
 ** 2017-09-14
 Roles definiton
 
+** 2017-09-18
+User profile management
+
 * Tables
 ** Role
 | Field       | Type       | Notes          |
@@ -136,6 +139,9 @@ the db
 
 *** Initial migration 
 python manage.py db migrate -m "Initial migration"
+
+*** Other migration
+python manage.py db migrate -m "New mmigration reason"
 
 *** Updating a db
 python manage.py db upgrade
