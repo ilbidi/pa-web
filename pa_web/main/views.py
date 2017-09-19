@@ -5,6 +5,7 @@ from . import main
 from .forms import ContactsForm
 from .. import db
 from flask_login import login_required
+from ..models import User
 
 # Emails
 from pa_web.emails import send_email
@@ -35,3 +36,13 @@ def contacts():
 @login_required
 def meteo():
     return render_template('meteo.html')
+
+# Profile page
+@main.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by( username=username).first()
+    if(user is None):
+        abort(404)
+    return render_template('user.html', user=user)
+    
