@@ -1,5 +1,5 @@
 # Forms definition
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp, EqualTo
 from wtforms import ValidationError
@@ -7,14 +7,14 @@ from wtforms import ValidationError
 from ..models import User
 
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email(), Length(1,128)])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Log in')
 
 # User Registration Form
-class UserRegistrationForm(Form):
+class UserRegistrationForm(FlaskForm):
     """A user must provide a unique email and name and a password"""
     email = StringField('Email', validators=[Required(), Email(), Length(1,128)])
     username = StringField('User name', validators=[Required(), Length(1,128), \
