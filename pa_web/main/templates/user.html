@@ -17,6 +17,14 @@
       {{ user.location }}</a>
     {% endif %}
   </p>
+  <p>
+    {% if geolocated_location  %}
+    Location: {{ geolocated_location }}
+    {% else %}
+    No location found.
+    {% endif %}
+  </p>
+  
   {% endif %}
   {% if current_user.is_administrator() %}
   <p>

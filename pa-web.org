@@ -90,6 +90,12 @@ Roles definiton
 
 ** 2017-09-18
 User profile management
+** <2017-09-22 Fri> 
+Post 
+
+** 2017-09-26
+Inserted in user form a real location calculated via geopy
+it does not work
 
 * Tables
 ** Role
@@ -146,6 +152,18 @@ python manage.py db migrate -m "New mmigration reason"
 *** Updating a db
 python manage.py db upgrade
 
+** Geolocalisation
+We will geopy package that is a client for variuos geocoding web services
+*** Examples
+**** Getting my home location via Nominatim (from openstreetmap)
+>>> from geopy.geocoders import Nominatim
+>>> geolocator = Nominatim()
+>>> location = geolocator.geocode("Via Palestro 37, Padova")
+>>> print(location.address)
+37, Via Palestro, San Giuseppe, Padova, PD, VEN, 35138, Italia
+**** Getting the distance from Arrakeen
+
+
 * TASKS
 ** DONE - Remove file .#pa-web.org@ from git
 
@@ -154,10 +172,13 @@ def test_no_password_getter(self):
     user = User( username = 'test', password='test1')
     with self.assertRaises(AttributeError):
         user.password
-** DONE : Check in detail what it means
+** DONE - Check in detail what it means
 return redirect(request.args.get('next') or url_for('main.index'))
 ## It manage a request with next as a parameter
 
+** TODO - Geolocalisation utils
+Started with a pa_gis module, try to use it in user edit form without success
+ 
 * PACKAGES REQUIRED
 flask
 sqlalchemy
