@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
+from pa_web.utils import pa_gis
 
 class Role(db.Model):
     __tablename__ = 'role'
@@ -66,6 +67,9 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+
+    # Gardens of the user
+    gardens = db.relationship('Garden', backref='owner', lazy='dynamic')
     
     # Constructor
     def __init__(self, **kwargs):
@@ -116,6 +120,10 @@ class User(UserMixin, db.Model):
         """Set the last_seen timestamp"""
         self.last_seen = datetime.utcnow()
         db.session.add(self)
+
+    def get_distance_from_arrakeen_m(self):
+        return pa_gis.get_distance_from_arrakeen_m(self.location)
+        
         
 
 class AnonymousUser(AnonymousUserMixin):
@@ -138,3 +146,18 @@ class Post(db.Model):
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index = True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+# Garden
+class Garden_type:
+    GARDEN=1
+    VEGETABLE_GARDEN=2
+    TERRACE=3
+    FIELD=4
+    
+class Garden(db.Model):
+    __tablename__='garden'
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(128))
+    location = db.Column(db.String(128))
+    garden_type = db.Column(db.Integer)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))

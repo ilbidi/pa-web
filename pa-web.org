@@ -131,6 +131,26 @@ Each permision is represented like this
 | username | Strin(64) | user name |
 relation many to 1 with Role
 
+** TODO Post
+
+** TODO Garden
+Garden
+| Field    | Type        | Notes                  |
+|----------+-------------+------------------------|
+| id       | Integer     |                        |
+| name     | String(128) | Garden description     |
+| type     | GardenType  |                        |
+| location | String(128) | Location of the garden |
+| owner    | id          | Ownwer of the garden   |
+|          |             |                        |
+
+GardenType (Enum)
+GARDEN
+VEGETABLE_GARDEN
+TERRACE
+FIELD
+
+
 * NOTES
 ** General
 To list a tree directory structure use

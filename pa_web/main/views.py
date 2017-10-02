@@ -7,6 +7,7 @@ from .. import db
 from flask_login import login_required, current_user
 from ..models import User, Role
 from ..decorators import admin_required 
+from pa_web.utils import pa_gis
 
 # Emails
 from pa_web.emails import send_email

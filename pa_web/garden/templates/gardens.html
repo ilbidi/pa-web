@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+
+{% block title %}Project Arrakis - User gardens{% endblock %}
+
+{% block page_content %}
+{{ super() }}
+<div class="page_header">
+</div>
+<div class="page_garden">
+  {% if gardens  %}
+  {% for garden in gardens %}
+  <li class="garden">
+    {{ garden.name }} in {{ garden.location }}.
+  </li>
+  {% endfor %}
+  {% else %}
+  <p>
+    You still have no gardens.
+  </p>
+  {% endif %}
+</div>
+<div class="page_add_garden">
+  <p>
+    <a href="{{ url_for('garden.add_garden') }}">Add a new garden.</a>
+  </p>
+</div>
+
+{% endblock %}

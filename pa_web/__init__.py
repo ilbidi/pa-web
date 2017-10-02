@@ -44,4 +44,7 @@ def create_app(config_name):
     from auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
+    from garden import garden as garden_blueprint
+    app.register_blueprint(garden_blueprint)
+
     return app

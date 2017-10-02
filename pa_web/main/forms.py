@@ -5,8 +5,6 @@ from wtforms.validators import DataRequired, Email, Length, Required, Regexp, Va
 
 from ..models import User, Role
 
-from pa_web.utils import pa_gis
-
 # Class contacts, send and email
 class ContactsForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -19,7 +17,6 @@ class EditProfileForm(FlaskForm):
     location = StringField('Location', validators=[Length(0, 128)])
     about_me = TextAreaField('About me')
     submit = SubmitField('Submit')
-    geolocated_location = StringField('Located Location', pa_gis.get_location(location))
     
 # User Edit profile admin form
 class EditProfileAdminForm(FlaskForm):
