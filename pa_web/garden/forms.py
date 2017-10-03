@@ -20,6 +20,7 @@ class GardenInsertForm(FlaskForm):
 
 # User Edit profile form
 class GardenEditForm(FlaskForm):
+    """Edit a garden"""
     name = StringField('Garden name', validators=[Required(), Length(1,128), \
                                                     Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0, \
                                                            'Garden names must have only letters, ' \

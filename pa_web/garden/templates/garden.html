@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+
+{% block title %}Project Arrakis - Garden{% endblock %}
+
+{% block page_content %}
+{{ super() }}
+<div class="page_header">
+  <h1>Garden {{garden.name}}</h1>
+  {% if garden.name %}
+  <p>
+    {{ garden.name }} in
+    {% if garden.location %}
+    From <a href="http://maps.google.com/?q={{ garden.location }}">
+      {{ garden.location }}</a>
+    {% endif %}
+  </p>
+  {% endif %}
+  <a class="btn btn-default" href="{{ url_for('garden.edit_garden', garden_id=garden.id) }}" >Edit garden</a>
+</div>
+{% endblock %}

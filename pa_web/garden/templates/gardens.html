@@ -11,7 +11,7 @@
   {% if gardens  %}
   {% for garden in gardens %}
   <li class="garden">
-    {{ garden.name }} in {{ garden.location }}.
+   <a href="{{ url_for('garden.show_garden', garden_id=garden.id) }}">{{ garden.name }}</a> in {{ garden.location }}.
   </li>
   {% endfor %}
   {% else %}
@@ -22,7 +22,7 @@
 </div>
 <div class="page_add_garden">
   <p>
-    <a href="{{ url_for('garden.add_garden') }}">Add a new garden.</a>
+    <a class="btn btn-default" href="{{ url_for('garden.add_garden') }}" >Add e new garden</a>
   </p>
 </div>
 
