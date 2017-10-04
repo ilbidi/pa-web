@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+
+{% block title %}Project Arrakis - Plant{% endblock %}
+
+{% block page_content %}
+{{ super() }}
+<div class="page_header">
+  <h1>Plant {{plant.name}}</h1>
+  {% if plant.description %}
+  <p>
+    {{ plant.description }}
+  </p>
+  {% if plant.garden.name %}
+  <p>    
+    In garden {{ plant.garden.name }}.
+  </p>
+  {% endif %}
+  {% endif %}
+  <a class="btn btn-default" href="{{ url_for('garden.edit_plant', plant_id=plant.id) }}" >Edit plant</a>
+</div>
+{% endblock %}

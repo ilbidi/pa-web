@@ -2,10 +2,10 @@
 from datetime import datetime
 from flask import request, render_template, render_template, url_for, redirect, flash, current_app
 from . import garden
-from .forms import GardenInsertForm, GardenEditForm
+from .forms import GardenInsertForm, GardenEditForm, PlantInsertForm, PlantEditForm
 from .. import db
 from flask_login import login_required, current_user
-from ..models import User, Role, Garden
+from ..models import User, Role, Garden, Plant
 from ..decorators import admin_required 
 from pa_web.utils import pa_gis
 
@@ -59,3 +59,54 @@ def edit_garden(garden_id):
     form.name.data = garden.name
     form.location.data = garden.location
     return render_template('edit_garden.html', form=form)
+
+# Plant List
+@garden.route('/plants')
+@login_required
+def list_user_plants():
+    plants = Plant.query.filter_by(owner = current_user) 
+    return render_template('plants.html', plants=plants)
+
+# Add a new plant
+@garden.route('/add-plant', methods=['GET', 'POST'])
+@login_required
+def add_plant():
+    form = PlantInsertForm()
+    if(form.validate_on_submit()):
+        plant = Plant(name = form.name.data, description=form.description.data, owner=current_user)
+        db.session.add(plant)
+        db.session.commit()
+        return redirect(url_for('garden.list_user_plants'))
+    return render_template('insert_plant.html', form = form)
+
+# Plant page
+@garden.route('/plant/<int:plant_id>')
+@login_required
+def show_plant(plant_id):
+    plant = Plant.query.filter_by( id=plant_id, owner=current_user).first()
+    if(plant is None):
+        abort(404)
+    return render_template('plant.html', plant=plant)
+
+# Plant edit page
+@garden.route('/edit-plant/<int:plant_id>', methods=['GET', 'POST'])
+@login_required
+def edit_plant(plant_id):
+    form = PlantEditForm()
+    plant = Plant.query.filter_by( id=plant_id, owner=current_user).first()
+    if(plant is None):
+        abort(404)
+    if( form.validate_on_submit()):
+        if( form.submit.data ):
+            # Pressed submit data
+            plant.name = form.name.data
+            plant.description = form.description.data
+            db.session.add(plant)
+            return redirect(url_for('garden.show_plant', plant_id=plant.id))
+        elif( form.delete.data ):
+            # Pressed delete
+            db.session.delete(plant)
+            return redirect(url_for('garden.list_user_plants'))
+    form.name.data = plant.name
+    form.description.data = plant.description
+    return render_template('edit_plant.html', form=form)

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+
+{% block title %}Project Arrakis - Plants{% endblock %}
+
+{% block page_content %}
+{{ super() }}
+<div class="page_header">
+</div>
+<div class="page_plant">
+  {% if plants  %}
+  {% for plant in plants %}
+  <li class="plant">
+    <a href="{{ url_for('garden.show_plant', plant_id=plant.id) }}">{{ plant.name }}</a>
+    {% if plant.garden.name %}
+    in {{ plant.garden.name }}
+    {% endif %}
+    .
+  </li>
+  {% endfor %}
+  {% else %}
+  <p>
+    You still have no plants.
+  </p>
+  {% endif %}
+</div>
+<div class="page_add_plant">
+  <p>
+    <a class="btn btn-default" href="{{ url_for('garden.add_plant') }}" >Add e new plant</a>
+  </p>
+</div>
+
+{% endblock %}

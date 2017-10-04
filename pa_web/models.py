@@ -70,6 +70,9 @@ class User(UserMixin, db.Model):
 
     # Gardens of the user
     gardens = db.relationship('Garden', backref='owner', lazy='dynamic')
+
+    # Plants of the user
+    plants = db.relationship('Plant', backref='owner', lazy='dynamic')
     
     # Constructor
     def __init__(self, **kwargs):
@@ -161,3 +164,16 @@ class Garden(db.Model):
     location = db.Column(db.String(128))
     garden_type = db.Column(db.Integer)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    # Plants of the garden
+    plants = db.relationship('Plant', backref='garden', lazy='dynamic')
+
+# Plant
+class Plant(db.Model):
+    __tablename__='plant'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    description = db.Column(db.String(1024))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    garden_id = db.Column(db.Integer, db.ForeignKey('garden.id'))
+    

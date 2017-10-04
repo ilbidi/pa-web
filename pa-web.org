@@ -97,6 +97,8 @@ Post
 Inserted in user form a real location calculated via geopy
 it does not work
 
+** 2017-10-04
+Insert flower 
 * Tables
 ** Role
 | Field       | Type       | Notes          |
@@ -133,7 +135,7 @@ relation many to 1 with Role
 
 ** TODO Post
 
-** TODO Garden
+** DONE Garden
 Garden
 | Field    | Type        | Notes                  |
 |----------+-------------+------------------------|
@@ -149,6 +151,15 @@ GARDEN
 VEGETABLE_GARDEN
 TERRACE
 FIELD
+** TODO Plant
+| Field       | Type         | Notes                       |
+|-------------+--------------+-----------------------------|
+| id          | Integer      |                             |
+| name        | String(128)  |                             |
+| description | String(1024) |                             |
+| owner       | id           | Owner of the Plant          |
+| garden      | id           | Garden the Plant belongs to |
+|             |              |                             |
 
 
 * NOTES
