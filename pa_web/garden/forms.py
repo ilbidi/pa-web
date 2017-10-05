@@ -1,6 +1,6 @@
 # Forms definition
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp, EqualTo
 from wtforms import ValidationError
 
@@ -40,8 +40,15 @@ class PlantInsertForm(FlaskForm):
                                                            'numbers, dots or underscores')
                                                     ])
     description = StringField('Plant description', validators=[ Length(0,1024)])
+    garden = SelectField('Garden', coerce=int)
     # TODO Garden
     submit = SubmitField('Add plant')
+
+    def __init__(self, user, *args, **kwargs):
+        super(PlantInsertForm, self).__init__(*args, **kwargs)
+        self.garden.choices = [ (garden.id, garden.name) \
+                              for garden in Garden.query.filter_by(owner=user).order_by(Garden.name).all() ]
+        self.user = user
 
 # Plant Edit profile form
 class PlantEditForm(FlaskForm):
@@ -52,7 +59,13 @@ class PlantEditForm(FlaskForm):
                                                            'numbers, dots or underscores')
                                                     ])
     description = StringField('Plant description', validators=[ Length(0,1024)])
+    garden = SelectField('Garden', coerce=int)
     # TODO Garden
     submit = SubmitField('Update plant')
     delete = SubmitField('Delete plant')
 
+    def __init__(self, user, *args, **kwargs):
+        super(PlantEditForm, self).__init__(*args, **kwargs)
+        self.garden.choices = [ (garden.id, garden.name) \
+                              for garden in Garden.query.filter_by(owner=user).order_by(Garden.name).all() ]
+        self.user = user

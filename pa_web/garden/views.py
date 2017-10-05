@@ -71,9 +71,10 @@ def list_user_plants():
 @garden.route('/add-plant', methods=['GET', 'POST'])
 @login_required
 def add_plant():
-    form = PlantInsertForm()
+    form = PlantInsertForm(user=current_user)
     if(form.validate_on_submit()):
         plant = Plant(name = form.name.data, description=form.description.data, owner=current_user)
+        plant.garden = Garden.query.get(form.garden.data)
         db.session.add(plant)
         db.session.commit()
         return redirect(url_for('garden.list_user_plants'))
@@ -92,7 +93,7 @@ def show_plant(plant_id):
 @garden.route('/edit-plant/<int:plant_id>', methods=['GET', 'POST'])
 @login_required
 def edit_plant(plant_id):
-    form = PlantEditForm()
+    form = PlantEditForm(user=current_user)
     plant = Plant.query.filter_by( id=plant_id, owner=current_user).first()
     if(plant is None):
         abort(404)
@@ -101,6 +102,7 @@ def edit_plant(plant_id):
             # Pressed submit data
             plant.name = form.name.data
             plant.description = form.description.data
+            plant.garden = Garden.query.get(form.garden.data)
             db.session.add(plant)
             return redirect(url_for('garden.show_plant', plant_id=plant.id))
         elif( form.delete.data ):
@@ -109,4 +111,6 @@ def edit_plant(plant_id):
             return redirect(url_for('garden.list_user_plants'))
     form.name.data = plant.name
     form.description.data = plant.description
+    if( plant.garden ):
+        form.garden.data = plant.garden.id
     return render_template('edit_plant.html', form=form)

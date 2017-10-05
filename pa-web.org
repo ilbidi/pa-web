@@ -98,7 +98,10 @@ Inserted in user form a real location calculated via geopy
 it does not work
 
 ** 2017-10-04
-Insert flower 
+Insert plant basic
+** 2017-10-05
+Managing garder type and plant garden
+
 * Tables
 ** Role
 | Field       | Type       | Notes          |
@@ -207,9 +210,11 @@ def test_no_password_getter(self):
 return redirect(request.args.get('next') or url_for('main.index'))
 ## It manage a request with next as a parameter
 
-** TODO - Geolocalisation utils
+** DONE - Geolocalisation utils
 Started with a pa_gis module, try to use it in user edit form without success
- 
+Correctly manage the distance from arrakeen in user form
+** TODO - Managenet of plants without gardens.
+MAnage the possibility of not associating a plant to any garden in the drop down list. 
 * PACKAGES REQUIRED
 flask
 sqlalchemy
