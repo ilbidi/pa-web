@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, TextAreaField, Bool
 from wtforms.validators import DataRequired, Required, Email, Length, Regexp, EqualTo
 from wtforms import ValidationError
 
-from ..models import User, Garden, Plant
+from ..models import User, Garden, Plant, GardenType
 
 
 # Insert a new garden
@@ -16,7 +16,15 @@ class GardenInsertForm(FlaskForm):
                                                            'numbers, dots or underscores')
                                                     ])
     location = StringField('Location', validators=[Length(0, 128)])
+    garden_type = SelectField('Garden type', coerce=int) 
     submit = SubmitField('Add garden')
+
+    def __init__(self, *args, **kwargs):
+        super(GardenInsertForm, self).__init__(*args, **kwargs)
+        self.garden_type.choices = [ (GardenType.GARDEN, 'Garden'), \
+                                     (GardenType.VEGETABLE_GARDEN, 'Vegetable garden'), \
+                                     (GardenType.TERRACE, 'Terace'), \
+                                     (GardenType.FIELD, 'Field') ]
 
 # Garden Edit form
 class GardenEditForm(FlaskForm):
@@ -27,9 +35,16 @@ class GardenEditForm(FlaskForm):
                                                            'numbers, dots or underscores')
                                                     ])
     location = StringField('Location', validators=[Length(0, 128)])
+    garden_type = SelectField('Garden type', coerce=int) 
     submit = SubmitField('Update garden')
     delete = SubmitField('Delete garden')
 
+    def __init__(self, *args, **kwargs):
+        super(GardenEditForm, self).__init__(*args, **kwargs)
+        self.garden_type.choices = [ (GardenType.GARDEN, 'Garden'), \
+                                     (GardenType.VEGETABLE_GARDEN, 'Vegetable garden'), \
+                                     (GardenType.TERRACE, 'Terace'), \
+                                     (GardenType.FIELD, 'Field') ]
 
 # Insert a new plant
 class PlantInsertForm(FlaskForm):
@@ -41,7 +56,7 @@ class PlantInsertForm(FlaskForm):
                                                     ])
     description = StringField('Plant description', validators=[ Length(0,1024)])
     garden = SelectField('Garden', coerce=int)
-    # TODO Garden
+    
     submit = SubmitField('Add plant')
 
     def __init__(self, user, *args, **kwargs):
@@ -60,7 +75,7 @@ class PlantEditForm(FlaskForm):
                                                     ])
     description = StringField('Plant description', validators=[ Length(0,1024)])
     garden = SelectField('Garden', coerce=int)
-    # TODO Garden
+    
     submit = SubmitField('Update plant')
     delete = SubmitField('Delete plant')
 

@@ -57,7 +57,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     confirmed = db.Column(db.Boolean, default=False)
-    #
+    
     name = db.Column(db.String(128))
     location = db.Column(db.String(128))
     about_me = db.Column(db.Text())
@@ -151,7 +151,7 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 # Garden
-class Garden_type:
+class GardenType:
     GARDEN=1
     VEGETABLE_GARDEN=2
     TERRACE=3

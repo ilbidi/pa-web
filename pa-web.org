@@ -215,6 +215,7 @@ Started with a pa_gis module, try to use it in user edit form without success
 Correctly manage the distance from arrakeen in user form
 ** TODO - Managenet of plants without gardens.
 MAnage the possibility of not associating a plant to any garden in the drop down list. 
+Test what will happen if no gardenare associated to a user
 * PACKAGES REQUIRED
 flask
 sqlalchemy

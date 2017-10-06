@@ -23,6 +23,7 @@ def add_garden():
     form = GardenInsertForm()
     if(form.validate_on_submit()):
         garden = Garden(name = form.name.data, location=form.location.data, owner=current_user)
+        garden.garden_type=form.garden_type.data
         db.session.add(garden)
         db.session.commit()
         return redirect(url_for('garden.list_gardens'))
@@ -50,6 +51,7 @@ def edit_garden(garden_id):
             # Pressed submit data
             garden.name = form.name.data
             garden.location = form.location.data
+            garden.garden_type=form.garden_type.data
             db.session.add(garden)
             return redirect(url_for('garden.show_garden', garden_id=garden.id))
         elif( form.delete.data ):
@@ -58,6 +60,8 @@ def edit_garden(garden_id):
             return redirect(url_for('garden.list_gardens'))
     form.name.data = garden.name
     form.location.data = garden.location
+    if( garden.garden_type):
+            form.garden_type.data=garden.garden_type
     return render_template('edit_garden.html', form=form)
 
 # Plant List
