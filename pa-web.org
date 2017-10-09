@@ -100,7 +100,12 @@ it does not work
 ** 2017-10-04
 Insert plant basic
 ** 2017-10-05
-Managing garder type and plant garden
+Managing garden type and plant garden
+** 2017-10-09
+Relations user <--> garden <--> plants
+Posts: We will put the posts in a blog blueprint
+First steps in API
+
 
 * Tables
 ** Role
@@ -130,13 +135,34 @@ Each permision is represented like this
 
 
 ** User
-| Field    | Type      | Notes   |
-|----------+-----------+---------|
-| id       | Integer   | user id |
-| username | Strin(64) | user name |
+| Field         | Type        | Notes           |
+|---------------+-------------+-----------------|
+| id            | Integer     | user id         |
+| email         | Strin(128)  |                 |
+| username      | String(64)  | user name       |
+| password_hash | String(128) | Hashed password |
+| confirmed     | Boolean     |                 |
+| name          | String(128) | user real name  |
+| location      | String(128) |                 |
+| about_me      | Text        |                 |
+| member_since  | DateTime    |                 |
+| last_seen     | DateTime    |                 |
+| role          | Role        | User role       |
+| posts         | Post        |                 |
+| gardens       | Garden      | User gardens    |
+| plants        | Plant       | User plants     |
+|               |             |                 |
+
 relation many to 1 with Role
 
 ** TODO Post
+| Field     | Type     | Notes |
+|-----------+----------+-------|
+| id        | Integer  |       |
+| body      | Text()   |       |
+| timestamp | DateTime |       |
+| author_id | User     |       |
+|           |          |       |
 
 ** DONE Garden
 Garden
@@ -146,15 +172,17 @@ Garden
 | name     | String(128) | Garden description     |
 | type     | GardenType  |                        |
 | location | String(128) | Location of the garden |
-| owner    | id          | Ownwer of the garden   |
+| owner    | id          | Owner of the garden    |
+| plants   | Plant       | Plants of the garden   |
 |          |             |                        |
 
 GardenType (Enum)
-GARDEN
-VEGETABLE_GARDEN
-TERRACE
-FIELD
-** TODO Plant
+  GARDEN=1
+  VEGETABLE_GARDEN=2
+  TERRACE=3
+  FIELD=4
+
+** DONE Plant
 | Field       | Type         | Notes                       |
 |-------------+--------------+-----------------------------|
 | id          | Integer      |                             |
@@ -164,6 +192,11 @@ FIELD
 | garden      | id           | Garden the Plant belongs to |
 |             |              |                             |
 
+
+* API
+Api are defined as a blueprint
+
+** TODO List of posts
 
 * NOTES
 ** General
@@ -196,7 +229,6 @@ We will geopy package that is a client for variuos geocoding web services
 >>> print(location.address)
 37, Via Palestro, San Giuseppe, Padova, PD, VEN, 35138, Italia
 **** Getting the distance from Arrakeen
-
 
 * TASKS
 ** DONE - Remove file .#pa-web.org@ from git

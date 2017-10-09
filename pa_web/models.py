@@ -128,7 +128,6 @@ class User(UserMixin, db.Model):
         return pa_gis.get_distance_from_arrakeen_m(self.location)
         
         
-
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permission):
         return False

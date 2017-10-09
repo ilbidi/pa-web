@@ -1,0 +1,6 @@
+# Blueprint for Garden
+from flask import Blueprint
+
+api = Blueprint('api', __name__)
+
+from . import posts
