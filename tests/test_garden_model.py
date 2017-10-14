@@ -1,5 +1,5 @@
 import unittest
-from pa_web.models import User, Role, Garden, Garden_type
+from pa_web.models import User, Role, Garden, GardenType
 from flask import current_app
 from pa_web import create_app, db
 
@@ -27,7 +27,7 @@ class GardenModelTestCase(unittest.TestCase):
         last_garden1 = Garden.query.order_by(Garden.id.desc()).first()
         self.assertTrue(last_garden1.name == 'test_chg')
         db.session.delete(last_garden1)
-        garden = Garden(name = 'test_new', owner = user, garden_type =Garden_type.TERRACE)
+        garden = Garden(name = 'test_new', owner = user, garden_type =GardenType.TERRACE)
         db.session.add(garden)
         self.assertTrue(Garden.query.filter((Garden.name=='test') | (Garden.name=='test_chg')).count() == 0 )
         self.assertTrue(Garden.query.filter(Garden.name=='test_new').count() > 0 )

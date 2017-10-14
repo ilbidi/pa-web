@@ -111,6 +111,21 @@ class User(UserMixin, db.Model):
         db.session.commit()
         return True
 
+    # Token based authentication for user
+    def generate_auth_token(self, expiration):
+        s = Serializer(current_app.config['SECRET_KEY'], \
+                       expires_in=expiration)
+        return s.dumps({'id': self_id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.load(token)
+        except:
+            return None
+        return User.query.get(data['id'])
+    
     def __repr__(self):
         return '<User %r>' % self.username
     # User helpers
@@ -149,6 +164,22 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index = True, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    def to_json(self):
+        json_post = {
+            'url': url_for('api.get_post', id=self.id, _external=True),
+            'body': self.body,
+            'timestamp': self.timestamp,
+            'author': url_for('api.get_user', id=self.author_id, _external=True)
+            }
+        return json_post
+
+    @staticmethod
+    def from_json(json_post):
+        body = json_post.get('body')
+        if( body is None or body == '' ):
+            raise ValidationError('Post does not have a body')
+        return Post(body=body)
+    
 # Garden
 class GardenType:
     GARDEN=1
