@@ -1,5 +1,5 @@
 # Errors management
-from flask import render_template
+from flask import render_template, request, jsonify
 from . import main
 
 # *** NOTE *** this decorator create an application wide error management

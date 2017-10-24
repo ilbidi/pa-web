@@ -6,6 +6,7 @@
 # 401 - Unathorized
 # 403 - Forbidden
 # 405 - Method not allowed
+from pa_web.exceptions import ValidationError
 
 def bad_request(message):
     """Response to a 400 error - bad request"""
@@ -30,3 +31,8 @@ def method_not_allowed(message):
     response = jsonify({'error': 'method_not_allowed', 'message': message})
     response.status_code = 405
     return response
+
+# Global exception catcher for validation error
+@api.errorhandler(ValidationError)
+def validation_error(e):
+    return bad_request(e.args[0])

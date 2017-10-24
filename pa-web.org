@@ -112,6 +112,9 @@ PA-WEB API
 ** 2017-10-14
 Created pa_web/exceptions.py to manage exceptions (needed for API)
 
+** 2017-10-24
+Implementing a simple service that retunrs the posts
+Testing the serivce with httpie
 * Tables
 ** Role
 | Field       | Type       | Notes          |
