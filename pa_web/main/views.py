@@ -6,7 +6,7 @@ from .forms import ContactsForm, EditProfileForm, EditProfileAdminForm
 from .. import db
 from flask_login import login_required, current_user
 from ..models import User, Role
-from ..decorators import admin_required 
+from ..decorators import admin_required
 from pa_web.utils import pa_gis
 
 # Emails
@@ -46,8 +46,8 @@ def user(username):
     user = User.query.filter_by( username=username).first()
     if(user is None):
         abort(404)
-    return render_template('user.html', user=user)
-    
+    return render_template('user.html', user=user, geolocated_location = pa_gis.get_location(user.location))
+
 # Edit User Profile page
 @main.route('/edit-profile', methods=['GET', 'POST'] )
 @login_required
